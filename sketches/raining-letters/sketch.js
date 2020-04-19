@@ -1,12 +1,11 @@
 let totalStars = 500;
 
 let letters = [];
-let textString = 'Fenil';
+let textString = 'Simmi';
 
 function setup() {
-	totalStars = Math.max(totalStars, windowHeight, windowWidth);
 	createCanvas(windowWidth, windowHeight);
-	for (i = 0; i < 300; i++) letters.push(new Letter(textString));
+	for (i = 0; i < totalStars; i++) letters.push(new Letter(textString));
 }
 
 function draw() {
@@ -14,5 +13,13 @@ function draw() {
 	fill(255);
 	for (const letter of letters) {
 		letter.draw();
+	}
+}
+
+function windowResized() {
+	resizeCanvas(windowWidth, windowHeight);
+	for (const letter of letters) {
+		letter.randomize();
+		letter.y = random(-10, windowHeight);
 	}
 }

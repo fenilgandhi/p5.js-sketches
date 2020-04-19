@@ -1,25 +1,31 @@
 class Letter {
 	constructor(word) {
-		this.scale = windowWidth / 64;
+		this.scale = int(windowWidth / 128);
 		this.word = word;
 		this.randomize();
+		this.y = random(-10, windowHeight);
 	}
 
 	randomize() {
 		this.x = random(0, width);
 		this.y = random(-100, -200);
-		this.size = random(1, this.scale);
-		this.vel = windowHeight / (this.size * this.scale);
+		this.size = random(1, 32);
+		this.vel = random(1, 10);
 		this.sparkle = random(1, this.scale);
-		this.text = '.'; //this.word[Math.floor(this.x / (width / 5))];
+		this.text = this.word[Math.floor(this.x / (width / 5))];
 	}
 
 	draw() {
-		this.y += this.vel;
+		push();
+		if (this.y > height + this.size) {
+			this.randomize();
+		} else {
+			this.y += this.vel;
+		}
+		this.sparkle = this.sparkle > this.size * 2 ? 0 : this.sparkle + 1;
 		fill(255 * this.sparkle);
+		textSize(this.size);
 		text(this.text, this.x, this.y);
-		this.sparkle++;
-		if (this.sparkle > this.size * 2) this.sparkle = 0;
-		this.y > height + this.size ? this.randomize() : 0;
+		pop();
 	}
 }
